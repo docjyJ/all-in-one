@@ -12,7 +12,7 @@ elif [ -z "$REDIS_HOST" ]; then
 fi
 
 # Only start container if nextcloud is accessible
-while ! nc -z "$NEXTCLOUD_HOST" 9000; do
+while ! nc -z "$NEXTCLOUD_HOST" 9001; do
     echo "Waiting for Nextcloud to start..."
     sleep 5
 done
@@ -42,8 +42,14 @@ if ! [ -f /nextcloud/custom_apps/notify_push/bin/"$CPU_ARCH"/notify_push ]; then
     exit 1
 fi
 
+echo "notify-push was started"
+
+# Set a default value for POSTGRES_PORT
+if [ -z "$POSTGRES_PORT" ]; then
+    POSTGRES_PORT=5432
+fi
 # Set sensitive values as env
-export DATABASE_URL="postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB"
+export DATABASE_URL="postgres://oc_$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
 export REDIS_URL="redis://:$REDIS_HOST_PASSWORD@$REDIS_HOST"
 
 # Run it

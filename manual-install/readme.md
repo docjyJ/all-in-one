@@ -11,6 +11,7 @@ You can run the containers that are build for AIO with docker-compose. This come
 - You lose the AIO interface
 - You lose update notifications and automatic updates
 - You lose all AIO backup and restore features
+- You lose all community containers: https://github.com/nextcloud/all-in-one/tree/main/community-containers#community-containers
 - **You need to know what you are doing, especially when modifying the compose.yaml file**
 - For updating, you need to strictly follow the at the bottom described update routine
 - Probably more
@@ -21,7 +22,8 @@ First, install docker and docker-compose (v2) if not already done. Then simply r
 git clone https://github.com/nextcloud/all-in-one.git
 cd all-in-one/manual-install
 ```
-Then copy the sample.conf to default environment file, e.g. `cp sample.conf .env`, open the new conf file, e.g. with `nano .env`, edit all values that are marked with `# TODO!`, close and save the file. (Note: there is no clamav image for arm64).
+Then copy the sample.conf to default environment file, e.g. `cp sample.conf .env`, open the new conf file, e.g. with `nano .env`, edit all values that are marked with `# TODO!`, close and save the file. (Note: there is no clamav image for arm64).<br>
+⚠️ **Warning**: Do not use the symbols `@` and `:` in your passwords. These symbols are used to build database connection strings. You will experience issues when using these symbols!
 
 Now copy the provided yaml file to a compose.yaml file by running `cp latest.yml compose.yaml`.
 

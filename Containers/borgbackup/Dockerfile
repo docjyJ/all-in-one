@@ -1,7 +1,9 @@
-FROM alpine:3.18.3
+# syntax=docker/dockerfile:latest
+FROM alpine:3.20.1
 
 RUN set -ex; \
     \
+    apk upgrade --no-cache -a; \
     apk add --no-cache \
         util-linux-misc \
         bash \

@@ -14,7 +14,8 @@
 				"properties": {
 					"image": {
 						"type": "string",
-						"minLength": 1
+						"minLength": 1,
+						"pattern": "^[a-z0-9/-]+$"
 					},
 					"expose": {
 						"type": "array",
@@ -30,6 +31,13 @@
 							"pattern": "^[A-Z_]+$"
 						}
 					},
+					"cap_drop": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"pattern": "^[A-Z_]+$"
+						}
+					},
 					"depends_on": {
 						"type": "array",
 						"items": {
@@ -39,7 +47,7 @@
 					},
 					"display_name": {
 						"type": "string",
-						"pattern": "^[A-Za-z ]+$"
+						"pattern": "^[A-Za-z 0-9-]+$"
 					},
 					"environment": {
 						"type": "array",
@@ -51,7 +59,7 @@
 					},
 					"container_name": {
 						"type": "string",
-						"pattern": "^nextcloud-aio-[a-z-]+$"
+						"pattern": "^nextcloud-aio-[a-z0-9-]+$"
 					},
 					"internal_port": {
 						"type": "string",
@@ -73,13 +81,20 @@
 								},
 								"port_number": {
 									"type": "string",
-									"pattern": "^(%[A-Z_]+%)$"
+									"pattern": "^(%[A-Z_]+%|[0-9]{1,5})$"
 								},
 								"protocol": {
 									"type": "string",
 									"pattern": "^(tcp|udp)$"
 								}
 							}
+						}
+					},
+					"aio_variables": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"pattern": "^[A-Z_a-z-]+=.*$"
 						}
 					},
 					"restart": {
@@ -99,6 +114,10 @@
 					"image_tag": {
 						"type": "string",
 						"pattern": "^([a-z0-9.-]+|%AIO_CHANNEL%)$"
+					},
+					"documentation": {
+						"type": "string",
+						"pattern": "^https://.*$"
 					},
 					"devices": {
 						"type": "array",
@@ -121,7 +140,7 @@
 						"type": "array",
 						"items": {
 							"type": "string",
-							"pattern": "^(php /var/www/html/occ .*|echo .*)$"
+							"pattern": "^(php /var/www/html/occ .*|echo .*|touch .*|mkdir .*)$"
 						}
 					},
 					"profiles": {

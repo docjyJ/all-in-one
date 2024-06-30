@@ -1,9 +1,11 @@
-FROM haproxy:2.8.3-alpine3.18
+# syntax=docker/dockerfile:latest
+FROM haproxy:3.0.2-alpine
 
 # hadolint ignore=DL3002
 USER root
-ENV NEXTCLOUD_HOST nextcloud-aio-nextcloud
+ENV NEXTCLOUD_HOST=nextcloud-aio-nextcloud
 RUN set -ex; \
+    apk upgrade --no-cache -a; \
     apk add --no-cache \
         ca-certificates \
         tzdata \

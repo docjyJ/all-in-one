@@ -1,6 +1,7 @@
-FROM caddy:2.7.4-alpine as caddy
+# syntax=docker/dockerfile:latest
+FROM caddy:2.8.4-alpine AS caddy
 
-FROM httpd:2.4.57-alpine3.18
+FROM httpd:2.4.59-alpine3.20
 
 COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
 
@@ -13,9 +14,8 @@ COPY --chmod=775 healthcheck.sh /healthcheck.sh
 VOLUME /mnt/data
 
 RUN set -ex; \
+    apk upgrade --no-cache -a; \
     apk add --no-cache shadow; \
-    groupmod -g 333 xfs; \
-    usermod -u 333 -g 333 xfs; \
     groupmod -g 33 www-data; \
     usermod -u 33 -g 33 www-data; \
     apk del --no-cache shadow; \
@@ -53,6 +53,12 @@ RUN set -ex; \
         /usr/local/apache2/conf/httpd.conf; \
     echo "Include conf/nextcloud.conf" | tee -a /usr/local/apache2/conf/httpd.conf; \
     echo "ServerName localhost" | tee -a /usr/local/apache2/conf/httpd.conf; \
+# Sync this with max db connections and pm.max_children
+# We don't actually expect so many workers but don't want to limit it artificially because people will report issues otherwise.
+    sed -i 's|MaxRequestWorkers.*|MaxRequestWorkers 5000|' /usr/local/apache2/conf/extra/httpd-mpm.conf; \
+    grep -q '<IfModule mpm_event_module>' /usr/local/apache2/conf/extra/httpd-mpm.conf; \
+# ServerLimit needs to be set to MaxRequestWorkers divided by ThreadsPerChild which is set to 25 by default
+    sed -i '/<IfModule mpm_event_module>/a\ \ \ \ ServerLimit 200' /usr/local/apache2/conf/extra/httpd-mpm.conf; \
     \
     rm -rf /usr/local/apache2/conf/original /var/www; \
     mkdir -p /var/www; \

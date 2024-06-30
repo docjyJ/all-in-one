@@ -47,7 +47,7 @@ elif ! sudo -u www-data test -r /var/run/docker.sock; then
     echo "Trying to fix docker.sock permissions internally..."
     DOCKER_GROUP=$(stat -c '%G' /var/run/docker.sock)
     DOCKER_GROUP_ID=$(stat -c '%g' /var/run/docker.sock)
-    # Check if a group with the same group id of /var/run/docker.socket already exists in the container
+    # Check if a group with the same group name of /var/run/docker.socket already exists in the container
     if grep -q "^$DOCKER_GROUP:" /etc/group; then
         # If yes, add www-data to that group
         echo "Adding internal www-data to group $DOCKER_GROUP"
@@ -70,12 +70,13 @@ fi
 # Check if api version is supported
 if ! sudo -u www-data docker info &>/dev/null; then
     print_red "Cannot connect to the docker socket. Cannot proceed."
+    echo "Did you maybe remove group read permissions for the docker socket? AIO needs them in order to access the docker socket."
     echo "If SELinux is enabled on your host, see https://github.com/nextcloud/all-in-one#are-there-known-problems-when-selinux-is-enabled"
     echo "If you are on TrueNas SCALE, see https://github.com/nextcloud/all-in-one#can-i-run-aio-on-truenas-scale"
     exit 1
 fi
 API_VERSION_FILE="$(find ./ -name DockerActionManager.php | head -1)"
-API_VERSION="$(grep -oP 'const API_VERSION.*\;' "$API_VERSION_FILE" | grep -oP '[0-9]+.[0-9]+' | head -1)"
+API_VERSION="$(grep -oP 'const string API_VERSION.*\;' "$API_VERSION_FILE" | grep -oP '[0-9]+.[0-9]+' | head -1)"
 # shellcheck disable=SC2001
 API_VERSION_NUMB="$(echo "$API_VERSION" | sed 's/\.//')"
 LOCAL_API_VERSION_NUMB="$(sudo -u www-data docker version | grep -i "api version" | grep -oP '[0-9]+.[0-9]+' | head -1 | sed 's/\.//')"
@@ -179,7 +180,7 @@ It is set to '$APACHE_PORT'."
     fi
 fi
 if [ -n "$APACHE_IP_BINDING" ]; then
-    if ! echo "$APACHE_IP_BINDING" | grep -q '^[0-9.]\+$'; then
+    if ! echo "$APACHE_IP_BINDING" | grep -q '^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+$\|^[0-9a-f:]\+$'; then
         print_red "You provided an ip-address for the apache container's ip-binding but it was not a valid ip-address.
 It is set to '$APACHE_IP_BINDING'."
         exit 1
@@ -238,6 +239,20 @@ if [ -n "$NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS" ]; then
         print_red "You've set NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS but not to an allowed value.
 It needs to be a string. Allowed are small letters a-z, digits 0-9, spaces, hyphens, dots and '_'.
 It is set to '$NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS'."
+        exit 1
+    fi
+fi
+if [ -n "$AIO_COMMUNITY_CONTAINERS" ]; then
+    read -ra AIO_CCONTAINERS <<< "$AIO_COMMUNITY_CONTAINERS"
+    for container in "${AIO_CCONTAINERS[@]}"; do
+        if ! [ -d "/var/www/docker-aio/community-containers/$container" ]; then
+            print_red "The community container $container was not found!"
+            FAIL_CCONTAINERS=1
+        fi
+    done
+    if [ -n "$FAIL_CCONTAINERS" ]; then
+        print_red "You've set AIO_COMMUNITY_CONTAINERS but at least one container was not found.
+It is set to '$AIO_COMMUNITY_CONTAINERS'."
         exit 1
     fi
 fi
@@ -329,6 +344,7 @@ fi
 print_green "Initial startup of Nextcloud All-in-One complete!
 You should be able to open the Nextcloud AIO Interface now on port 8080 of this server!
 E.g. https://internal.ip.of.this.server:8080
+⚠️ Important: do always use an ip-address if you access this port and not a domain as HSTS might block access to it later!
 
 If your server has port 80 and 8443 open and you point a domain to your server, you can get a valid certificate automatically by opening the Nextcloud AIO Interface via:
 https://your-domain-that-points-to-this-server.tld:8443"
