@@ -1,13 +1,7 @@
 # syntax=docker/dockerfile:latest
-FROM caddy:2.8.4-alpine AS caddy
-
 FROM httpd:2.4.59-alpine3.20
 
-COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
-
-COPY --chown=33:33 Caddyfile /Caddyfile
 COPY --chmod=664 nextcloud.conf /usr/local/apache2/conf/nextcloud.conf
-COPY --chmod=664 supervisord.conf /supervisord.conf
 COPY --chmod=775 start.sh /start.sh
 COPY --chmod=775 healthcheck.sh /healthcheck.sh
 
@@ -26,7 +20,6 @@ RUN set -ex; \
     \
     apk add --no-cache \
         bash \
-        supervisor \
         tzdata \
         ca-certificates \
         openssl \
@@ -64,13 +57,6 @@ RUN set -ex; \
     mkdir -p /var/www; \
     chown -R www-data:www-data /var/www; \
     \
-    mkdir /var/log/supervisord; \
-    mkdir /var/run/supervisord; \
-    chown www-data:www-data /var/run/supervisord; \
-    chown www-data:www-data /var/log/supervisord; \
-    chmod 777 /var/run/supervisord; \
-    chmod 777 /var/log/supervisord; \
-    \
     chown -R www-data:www-data /usr/local/apache2; \
     chmod +r -R /usr/local/apache2; \
     mkdir -p /usr/local/apache2/logs; \
@@ -83,7 +69,7 @@ RUN set -ex; \
 USER www-data
 
 ENTRYPOINT ["/start.sh"]
-CMD ["/usr/bin/supervisord", "-c", "/supervisord.conf"]
+CMD ["/usr/bin/apachectl", "-DFOREGROUND"]
 
 HEALTHCHECK CMD /healthcheck.sh
 LABEL com.centurylinklabs.watchtower.enable="false"
