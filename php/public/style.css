@@ -1,18 +1,90 @@
+/*
+ * Main elements
+ */
+
 html, body {
     padding: 0;
     margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow: clip;
+    background-color: #0082c9;
+    background-image: linear-gradient(40deg, #0082c9 0%, #30b6ff 100%);
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Cantarell, Ubuntu, Helvetica Neue, Arial, Noto Color Emoji, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;;
+}
+
+header {
+    height: 50px;
+    justify-content: space-between;
+    display: inline-flex;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+main {
+    padding: 0;
+    margin: 50px 8px 8px;
+    border-radius: 16px;
+    background-color: white;
+    position: static;
+    overflow: scroll;
+    height: calc(100% - 58px);
+    width: calc(100% - 16px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+section {
+    padding: 48px;
+    max-width: 768px;
+    margin: 0 auto;
+    border-top: lightgray 1px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: start;
+    gap: 16px
+}
+
+section:first-child {
+    border-top: none;
+}
+
+/*
+ * Section elements
+ */
+
+h2, p {
+    margin: 0;
+    text-align: justify;
+}
+
+form {
+    margin: 0;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: start;
+}
+
+/*
+ * Content elements
+ */
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    margin: 0;
 }
 
 a {
     text-decoration: none;
     color: #0082c9;
-}
-
-section {
-    padding: 16px;
-    border: darkgray 1px solid;
-    border-radius: 10px;
 }
 
 a.button,
@@ -24,7 +96,7 @@ input[type="submit"] {
     background-color:#0082c9;
     font-weight: bold;
     border-radius: 100px;
-    margin: 3px 3px 3px 0;
+    margin: 0;
     font-size: 13px;
     color: white;
     border: 1px solid black;
@@ -35,10 +107,6 @@ a.button:focus,
 input[type="submit"]:focus {
     color:black;
     border: 2px solid black;
-}
-
-#logout {
-    margin-top: 7px;
 }
 
 summary {
@@ -116,12 +184,6 @@ div.toast {
     font-size: 17px;
 }
 
-input[type="text"],
-input[type="password"] {
-    padding: 10px;
-    margin-bottom: 15px;
-}
-
 .login > form > input[type="password"] {
     width: 100%;
 }
@@ -155,13 +217,6 @@ input[type="password"] {
     position: relative;
 }
 
-main {
-    padding: 20px;
-    word-break: break-word;
-    max-width: 720px;
-    margin: 0 auto;
-}
-
 .logo {
     background-image: url('/img/logo.svg');
     height: 50px;
@@ -174,14 +229,6 @@ main {
     left: 12px;
     top: 1px;
     bottom: 1px;
-}
-
-header {
-    background-color: #0082c9;
-    background-image: linear-gradient(40deg, #0082c9 0%, #30b6ff 100%);
-    height: 50px;
-    justify-content: space-between;
-    display: flex;
 }
 
 .loading {
