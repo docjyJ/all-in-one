@@ -9,10 +9,22 @@ If this is the case, just execute the following command:
 
 ```bash
 composer install
-composer run dev
+sudo composer run dev # sudo is required to access docker socket
 ```
 
 You can then access the web interface at `localhost:8080`.
+
+If you have an error that says `Couldn't connect to server for http://127.0.0.1/v1.41/networks/create` makes sure a `nextcloud-aio-mastercontainer` is running.
+You can start it with the following command:
+
+```bash
+sudo docker run \
+--rm \
+--name nextcloud-aio-mastercontainer \
+--volume nextcloud_aio_mastercontainer:/mnt/docker-aio-config \
+--volume /var/run/docker.sock:/var/run/docker.sock:ro \
+nextcloud/all-in-one:latest
+```
 
 ## Commands
 
@@ -24,3 +36,5 @@ You can then access the web interface at `localhost:8080`.
 | `composer run lint`                     | Run PHP Syntax check                   |
 
 [//]: # (| `composer run php-deprecation-detector` | Run PHP Deprecation Detector           |)
+
+

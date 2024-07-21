@@ -1,4 +1,4 @@
-/php/data
-/php/session
-/php/vendor
-/php/.idea
+data/
+session/
+vendor/
+.idea/
