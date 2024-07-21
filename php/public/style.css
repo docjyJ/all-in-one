@@ -9,7 +9,14 @@ a {
     color: #0082c9;
 }
 
-.button {
+section {
+    padding: 16px;
+    border: darkgray 1px solid;
+    border-radius: 10px;
+}
+
+a.button,
+input[type="submit"] {
     padding: 6px 16px;
     width: auto;
     min-height: 34px;
@@ -24,7 +31,8 @@ a {
     outline: none;
 }
 
-.button:focus {
+a.button:focus,
+input[type="submit"]:focus {
     color:black;
     border: 2px solid black;
 }
@@ -108,12 +116,13 @@ div.toast {
     font-size: 17px;
 }
 
-input {
+input[type="text"],
+input[type="password"] {
     padding: 10px;
     margin-bottom: 15px;
 }
 
-.login > form > input {
+.login > form > input[type="password"] {
     width: 100%;
 }
 
@@ -123,7 +132,7 @@ input {
     display: block;
 }
 
-.login > .button {
+.login > a.button {
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -146,11 +155,10 @@ input {
     position: relative;
 }
 
-.content {
+main {
     padding: 20px;
-    max-width: 100%;
     word-break: break-word;
-    max-width: 500px;
+    max-width: 720px;
     margin: 0 auto;
 }
 
@@ -207,13 +215,13 @@ header {
     top: calc(50% - 60px);
     left: calc(50% - 60px);
   }
-  
+
   /* Safari */
   @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }
   }
-  
+
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
