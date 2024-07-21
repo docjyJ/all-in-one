@@ -1,4 +1,6 @@
 /php/data/configuration.json
 /php/data/containers.json
 
+/php/session/sess_*
+
 .idea
