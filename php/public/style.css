@@ -57,6 +57,11 @@ section:first-child {
  * Section elements
  */
 
+h1 {
+    margin: auto;
+    color: white;
+}
+
 h2, p {
     margin: 0;
     text-align: justify;
