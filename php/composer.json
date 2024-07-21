@@ -1,6 +1,6 @@
 {
     "autoload": {
-        "psr-4": { 
+        "psr-4": {
             "AIO\\": ["src/"]
         }
     },
@@ -17,6 +17,9 @@
         "slim/twig-view": "^3.3",
         "slim/csrf": "^1.3",
         "ext-apcu": "*"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^5.25"
     },
     "scripts": {
 		"psalm": "psalm --threads=1",
