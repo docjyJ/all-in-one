@@ -7,7 +7,7 @@ This is the code for the PHP Docker controller.
 Running this locally requires Docker Engine on the same machine. 
 If this is the case, just execute the following command:
 
-```
+```bash
 composer install
 composer run dev
 ```
