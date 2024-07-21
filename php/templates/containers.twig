@@ -93,7 +93,7 @@
                         The official Nextcloud installation method. Nextcloud All-in-One provides easy deployment and maintenance with most features included in this one Nextcloud instance.<br><br>
                         You can either create a new AIO instance or restore a former AIO instance from backup. See the two sections below.<br><br>
                         {{ include('includes/aio-config.twig') }}
-                        {% include 'includes/section/new-instance.twig' with {'domain': domain, 'is_https': apach_port == '443', 'skip_domain_validation': skip_domain_validation } only%}
+                        {{ include('includes/section/new-instance.twig', {'domain': domain, 'is_https': apach_port == '443', 'skip_domain_validation': skip_domain_validation }, with_context = false) }}
                     {% endif %}
 
                     <section>
@@ -178,7 +178,7 @@
                         {% endif %}
                     </section>
                 {% endif %}
-                {% include 'includes/section/how-reset.twig' only %}
+                {{ include('includes/section/how-reset.twig', with_context = false) }}
             {% endif %}
 
             {% if was_start_button_clicked == true %}
@@ -618,7 +618,7 @@
                         {% endif %}
                     {% endif %}
 
-                    {% include 'includes/section/timezone.twig' with {'running': isAnyRunning, 'timezone': timezone} only %}
+                    {{ include('includes/section/timezone.twig', {'running': isAnyRunning, 'timezone': timezone}, with_context = false) }}
                 {% endif %}
             {% endif %}
         {% endif %}
