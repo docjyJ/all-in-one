@@ -9,7 +9,7 @@ If this is the case, just execute the following command:
 
 ```bash
 composer install
-sudo composer run dev # sudo is required to access docker socket
+sudo SKIP_DOMAIN_VALIDATION=true composer run dev # sudo is required to access docker socket
 ```
 
 You can then access the web interface at `localhost:8080`.
