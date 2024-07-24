@@ -1,7 +1,7 @@
 <section>
     <h2>New AIO instance</h2>
     <p>
-    {% if is_https %}
+    {% if apach_port == '443' %}
         AIO is currently in "normal mode" which means that it handles the TLS proxying itself.
         This also means that it cannot be installed behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else).
         If you want to run AIO behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else), see the <strong><a href="https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md">reverse proxy documentation</a></strong>.
@@ -35,7 +35,7 @@
             <p>If you have a dynamic public IP-address, you can use e.g. <a href="https://ddclient.net/">DDclient</a> with a compatible domain provider for DNS updates.</p>
             <p>If you only want to install AIO locally without exposing it to the public internet or if you cannot do so, feel free to follow <a href="https://github.com/nextcloud/all-in-one/blob/main/local-instance.md">this documentation</a>.</p>
             <p>If you should be using Cloudflare Proxy for your domain, make sure to disable the Proxy feature temporarily as it might block the domain validation attempts.</p>
-            {% if not is_https %}
+            {% if apach_port != '443' %}
                 <p>If you run into issues with your domain being accepted, see <a href="https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md#6-how-to-debug-things">these steps</a> for how to debug things.</p>
             {% endif %}
             <p><strong>Hint:</strong> If the domain validation fails but you are completely sure that you've configured everything correctly, you may skip the domain validation by following <a href="https://github.com/nextcloud/all-in-one#how-to-skip-the-domain-validation">this documentation</a>.</p>
