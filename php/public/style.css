@@ -1,7 +1,3 @@
-/*
- * Main elements
- */
-
 html, body {
     padding: 0;
     margin: 0;
@@ -13,78 +9,9 @@ html, body {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Cantarell, Ubuntu, Helvetica Neue, Arial, Noto Color Emoji, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;;
 }
 
-header {
-    height: 50px;
-    justify-content: space-between;
-    display: inline-flex;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
-main {
-    padding: 0;
-    margin: 50px 8px 8px;
-    border-radius: 16px;
-    background-color: white;
-    position: static;
-    overflow: scroll;
-    height: calc(100% - 58px);
-    width: calc(100% - 16px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-}
-
-section {
-    padding: 48px;
-    max-width: 768px;
-    margin: 0 auto;
-    border-top: lightgray 1px solid;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: start;
-    gap: 16px
-}
-
-section:first-child {
-    border-top: none;
-}
-
-/*
- * Section elements
- */
-
-h1 {
-    margin: auto;
-    color: white;
-}
-
 h2, p {
     margin: 0;
     text-align: justify;
-}
-
-form {
-    margin: 0;
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    justify-content: start;
-}
-
-/*
- * Content elements
- */
-
-input[type="text"],
-input[type="password"] {
-    padding: 10px;
-    margin: 0;
 }
 
 a {
@@ -94,24 +21,23 @@ a {
 
 a.button,
 input[type="submit"] {
-    padding: 6px 16px;
+    padding: 8px 16px;
     width: auto;
-    min-height: 34px;
+    height: 34px;
     cursor: pointer;
-    background-color:#0082c9;
+    background-color: #0082c9;
     font-weight: bold;
-    border-radius: 100px;
+    border-radius: 8px;
     margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     color: white;
-    border: 1px solid black;
+    border: .5px solid black;
     outline: none;
 }
 
 a.button:focus,
 input[type="submit"]:focus {
-    color:black;
-    border: 2px solid black;
+    border: 1px solid black;
 }
 
 summary {
@@ -169,8 +95,7 @@ div.toast {
     position: fixed;
     z-index: 1000;
     border-radius: 3px;
-    background: none;
-    background-color: white;
+    background: white none;
 }
 
 .login {
@@ -181,7 +106,7 @@ div.toast {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 16px;
+    border-radius: 12px;
 }
 
 .login > .monospace {
@@ -189,7 +114,62 @@ div.toast {
     font-size: 17px;
 }
 
-.login > form > input[type="password"] {
+form {
+    margin: 0;
+}
+
+input {
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 34px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: .5px solid black;
+}
+
+form {
+    margin: 0;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    margin: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 34px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: .5px solid black;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    border: 1px solid black;
+}
+
+textarea {
+    border-radius: 8px;
+    border: .5px solid black;
+}
+
+select {
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 34px;
+    border-radius: 8px;
+    border: .5px solid black;
+}
+
+select:focus {
+    border: 1px solid black;
+}
+
+.login > form > input[type="password"],
+.login > form > input[type="text"] {
     width: 100%;
 }
 
@@ -199,7 +179,8 @@ div.toast {
     display: block;
 }
 
-.login > a.button {
+.login > a.button ,
+.login > input[type="submit"] {
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -209,17 +190,42 @@ div.toast {
 }
 
 .login-wrapper {
-    height: 100%;
-    width: 100%;
-    background-color: #0082c9;
-    background-image: linear-gradient(
-            40deg
-            , #0082c9 0%, #30b6ff 100%);
-    background-size: contain;
-    background-image: url('/img/background.png'), linear-gradient(
-            40deg
-            , #0082c9 0%, #30b6ff 100%);
-    position: relative;
+    min-height: 100dvh;
+    min-width: 100vw;
+    position: fixed;
+    width: 100vw;
+    height: auto;
+    background-image: url("img/Background_Light.jpg");
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+main {
+    padding: 0;
+    margin: 50px 8px 8px;
+    border-radius: 16px;
+    background-color: white;
+    position: static;
+    overflow: scroll;
+    height: calc(100% - 58px);
+    width: calc(100% - 16px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+section {
+    padding: 48px;
+    max-width: 768px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: start;
+    gap: 16px
 }
 
 .logo {
@@ -236,23 +242,32 @@ div.toast {
     bottom: 1px;
 }
 
+header {
+    height: 50px;
+    justify-content: space-between;
+    display: inline-flex;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
 .loading {
     color: grey;
 }
 
 #overlay {
-  position: fixed; /* Sit on top of the page content */
-  display: none; /* Hidden by default */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-  z-index: 2;
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    z-index: 2;
 }
 
 #overlay.loading {
-  display: block;
+    display: block;
 }
 
 .loader {
@@ -266,15 +281,15 @@ div.toast {
     position: absolute;
     top: calc(50% - 60px);
     left: calc(50% - 60px);
-  }
+}
 
-  /* Safari */
-  @-webkit-keyframes spin {
+/* Safari */
+@-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }
-  }
+}
 
-  @keyframes spin {
+@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}
