@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   annotations:
     kompose.cmd: kompose convert -c -f latest.yml --namespace "{{ .Values.NAMESPACE }}"
-    kompose.version: 1.34.0 (cbf2835db)
+    kompose.version: 1.35.0 (9532ceef3)
   labels:
     io.kompose.service: nextcloud-aio-fulltextsearch
   name: nextcloud-aio-fulltextsearch
@@ -20,7 +20,7 @@ spec:
     metadata:
       annotations:
         kompose.cmd: kompose convert -c -f latest.yml --namespace "{{ .Values.NAMESPACE }}"
-        kompose.version: 1.34.0 (cbf2835db)
+        kompose.version: 1.35.0 (9532ceef3)
       labels:
         io.kompose.service: nextcloud-aio-fulltextsearch
     spec:
@@ -60,7 +60,7 @@ spec:
               value: basic
             - name: xpack.security.enabled
               value: "false"
-          image: "{{ .Values.IMAGE_MIRROR_PREFIX }}{{ .Values.NEXTCLOUD_IMAGE_ORG }}/aio-fulltextsearch:20240725_074330"
+          image: "{{ .Values.IMAGE_MIRROR_PREFIX }}{{ .Values.NEXTCLOUD_IMAGE_ORG }}/aio-fulltextsearch:20250106_094420"
           name: nextcloud-aio-fulltextsearch
           ports:
             - containerPort: 9200
